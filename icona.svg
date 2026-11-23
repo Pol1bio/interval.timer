@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<defs>
+<linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fb8a2e"/><stop offset="1" stop-color="#ea5a0c"/></linearGradient>
+<filter id="r" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="7"/><feOffset dy="9"/><feComponentTransfer><feFuncA type="linear" slope="0.32"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<mask id="taglio" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+  <rect width="512" height="512" fill="#fff"/>
+  <g transform="translate(328 322) rotate(-38) scale(1.0)" fill="#000" stroke="#000" stroke-width="44.0" stroke-linejoin="round"><path d="M -60,-58 C -40,-88 30,-94 70,-74 C 106,-56 114,-10 106,26 C 98,64 60,82 10,80 L -60,72 C -70,40 -70,-26 -60,-58 Z"/><rect x="-114" y="-60" width="42" height="126" rx="12"/></g>
+</mask>
+<mask id="pollice" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+  <rect width="512" height="512" fill="#fff"/>
+  <path transform="translate(328 322) rotate(-38) scale(1.0)" d="M -40,20 C -10,26 22,24 42,6 C 56,-8 68,-18 86,-22" fill="none" stroke="#000" stroke-width="12" stroke-linecap="round"/>
+</mask>
+</defs>
+<rect width="512" height="512" fill="url(#f)"/>
+<g filter="url(#r)">
+  <g mask="url(#taglio)"><circle cx="220" cy="266" r="124" fill="none" stroke="#fff" stroke-width="30"/><rect x="190" y="80" width="60" height="30" rx="12" fill="#fff"/><rect x="209" y="104" width="22" height="30" rx="6" fill="#fff"/><rect x="98.1055556972717" y="140.10555569727165" width="26" height="34" rx="9" fill="#fff" transform="rotate(-45 111.1055556972717 157.10555569727165)"/><line x1="220" y1="266" x2="220" y2="188" stroke="#fff" stroke-width="22" stroke-linecap="round"/></g>
+  <g mask="url(#pollice)"><g transform="translate(328 322) rotate(-38) scale(1.0)" fill="#fff"><path d="M -60,-58 C -40,-88 30,-94 70,-74 C 106,-56 114,-10 106,26 C 98,64 60,82 10,80 L -60,72 C -70,40 -70,-26 -60,-58 Z"/><rect x="-114" y="-60" width="42" height="126" rx="12"/></g></g>
+</g>
+</svg>

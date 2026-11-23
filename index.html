@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Timer">
 <link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png">
 <link rel="icon" href="./icon-192.png">
 <title>Timer Intervalli</title>
 <style>
@@ -379,8 +379,8 @@ body.orizz:not(.in-run) #ruota{display:flex}
 
 <script>
 'use strict';
-const VERSIONE = 'v2.2';
-const NOTE = '<b>v2.2</b> — Predisposizione per la libreria di esercizi: l’app legge il file esercizi.json, suggerisce gli esercizi mentre scrivi e li collega agli intervalli; la libreria entra in esportazione e importazione.<br>' + '<b>v2.1</b> — Intervalli riordinabili con le frecce ↑ ↓; pulsante “Fatto” del blocco più visibile, in alto a destra.<br>' + '<b>v2.0</b> — Allenamenti a blocchi: ogni blocco ha i suoi intervalli di lavoro e riposo, il numero di ripetizioni e un recupero finale facoltativo. Ogni intervallo di lavoro può avere il nome dell’esercizio, mostrato e annunciato durante l’allenamento. Nuovo modello “Circuito”. I timer creati con la v1 vengono convertiti in automatico.<br>'
+const VERSIONE = 'v2.3';
+const NOTE = '<b>v2.3</b> — Nuova icona: cronometro con guantone da boxe, bianco su fondo arancione.<br>' + '<b>v2.2</b> — Predisposizione per la libreria di esercizi: l’app legge il file esercizi.json, suggerisce gli esercizi mentre scrivi e li collega agli intervalli; la libreria entra in esportazione e importazione.<br>' + '<b>v2.1</b> — Intervalli riordinabili con le frecce ↑ ↓; pulsante “Fatto” del blocco più visibile, in alto a destra.<br>' + '<b>v2.0</b> — Allenamenti a blocchi: ogni blocco ha i suoi intervalli di lavoro e riposo, il numero di ripetizioni e un recupero finale facoltativo. Ogni intervallo di lavoro può avere il nome dell’esercizio, mostrato e annunciato durante l’allenamento. Nuovo modello “Circuito”. I timer creati con la v1 vengono convertiti in automatico.<br>'
   + '<b>v1.1</b> — Schermata di allenamento anche in orizzontale; le altre schermate chiedono di ruotare il telefono.<br>'
   + '<b>v1.0</b> — Prima versione.';
 const LS = { timer: 'ti_timer', imp: 'ti_impostazioni', run: 'ti_in_corso', esercizi: 'ti_esercizi' };

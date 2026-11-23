@@ -10,7 +10,8 @@ Web app installabile (PWA), pubblicata con GitHub Pages. Tutti i dati restano su
 | `index.html` | L'app completa (HTML, CSS e JavaScript) |
 | `manifest.json` | Dati per l'installazione sul telefono |
 | `sw.js` | Service worker: funzionamento offline e aggiornamenti |
-| `icon-192.png`, `icon-512.png` | Icone |
+| `icon-180.png`, `icon-192.png`, `icon-512.png` | Icone (180 px per iPhone) |
+| `icona.svg` | Disegno originale dell'icona, da cui si ricavano i PNG |
 | `esercizi.json` | Libreria di esercizi (per ora vuota) |
 
 ## Libreria di esercizi
