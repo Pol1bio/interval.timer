@@ -3,6 +3,17 @@
 Timer a intervalli per allenamento (HIIT, Tabata, boxe, circuiti), ispirato all'app iOS Timer Plus.
 Web app installabile (PWA), pubblicata con GitHub Pages. Tutti i dati restano sul telefono.
 
+## Come si usa
+
+- **Pagina principale:** tocca una scheda per modificarla, il pulsante verde ▶ per avviare l'allenamento.
+  Scorri una scheda verso sinistra per Duplica ed Elimina; tienila premuta e trascinala per cambiare l'ordine.
+- **Workout:** preparazione, blocchi e defaticamento. Ogni blocco ha i suoi intervalli di lavoro e riposo,
+  le ripetizioni e un recupero finale. Con **Giri totali** si ripete tutto il workout o un tratto di blocchi,
+  con un recupero tra i giri.
+- **Intervalli di lavoro:** a tempo oppure a ripetizioni; per le ripetizioni si sceglie quanti secondi vale
+  ognuna (2 s di partenza, regolabile nelle Impostazioni per i nuovi esercizi).
+- **Esercizi:** dalla libreria (icona a forma di libro) o scritti a mano.
+
 ## File
 
 | File | Contenuto |

@@ -39,7 +39,6 @@ input{font:inherit;color:inherit;-webkit-user-select:text;user-select:text}
 #bl-titolo{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;padding-left:4px}
 .fatto{min-height:44px;min-width:84px;padding:0 16px;border-radius:12px;background:var(--acc);color:#06210f;font-weight:800;font-size:17px;flex:0 0 auto}
 .fatto:active{transform:scale(.96)}
-.spaz-fatto{width:84px;flex:0 0 84px}
 .ord{width:40px;height:36px;border-radius:10px;background:var(--card2);color:var(--txt);font-size:18px;font-weight:700;flex:0 0 auto}
 .ord:disabled{opacity:.25}
 .ver{font-size:11px;color:var(--muted)}
@@ -62,8 +61,24 @@ input{font:inherit;color:inherit;-webkit-user-select:text;user-select:text}
 .card .nome{font-size:18px;font-weight:700}
 .card .riass{font-size:13px;color:var(--muted)}
 .card .dur{font-size:20px;font-weight:700;padding:0 4px;display:flex;align-items:center}
-.card .mod{width:52px;display:grid;place-items:center;color:var(--muted);border-left:1px solid var(--linea)}
-.card .mod svg{width:22px;height:22px}
+.riga-card{position:relative;flex:0 0 auto;border-radius:16px;overflow:hidden;list-style:none;-webkit-touch-callout:none;touch-action:pan-y;transition:box-shadow .15s}
+.riga-card .card{position:relative;z-index:1;transition:transform .2s ease}
+.riga-card.muove .card{transition:none}
+.dietro{position:absolute;inset:0;display:flex;justify-content:flex-end;background:var(--card2);visibility:hidden}
+.riga-card.aperta .dietro,.riga-card.muove .dietro{visibility:visible}
+.dietro button{width:84px;font-weight:700;font-size:14px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.dietro svg{width:22px;height:22px}
+.dietro .b-dup{background:#2563eb}
+.dietro .b-del{background:var(--perico)}
+.card .play{flex:0 0 auto;align-self:center;width:50px;height:50px;margin:0 12px 0 4px;border-radius:50%;background:var(--acc);color:#06210f;display:grid;place-items:center}
+.card .play svg{width:22px;height:22px;margin-left:3px}
+.card .play:active{transform:scale(.94)}
+.riga-card.trascina{z-index:5;overflow:visible;box-shadow:0 12px 28px rgba(0,0,0,.55)}
+.riga-card.trascina .card{background:var(--card2)}
+.riga-card.trascina .dietro{display:none}
+.ed-azioni{flex:0 0 auto;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ed-azioni button{min-height:44px;border-radius:12px;background:var(--card);font-weight:600}
+.ed-azioni .rosso{color:var(--perico)}
 .vuoto{color:var(--muted);text-align:center;padding:40px 10px;font-size:15px}
 .piede{flex:0 0 auto;padding-top:8px}
 .primario{width:100%;min-height:56px;border-radius:16px;background:var(--acc);color:#06210f;font-size:18px;font-weight:700}
@@ -87,7 +102,8 @@ input{font:inherit;color:inherit;-webkit-user-select:text;user-select:text}
 .pericolo{flex:0 0 auto;min-height:44px;border-radius:12px;color:var(--perico);background:var(--card);font-weight:600}
 
 /* editor: elenco blocchi */
-.blocchi{flex:1;min-height:0;overflow-y:auto;list-style:none;display:flex;flex-direction:column;gap:6px;-webkit-overflow-scrolling:touch}
+.ed-scroll{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch}
+.blocchi{flex:0 0 auto;list-style:none;display:flex;flex-direction:column;gap:6px}
 .bcard{width:100%;display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;padding:10px 12px;min-height:62px;text-align:left}
 .bnum{width:30px;height:30px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-weight:700;font-size:14px;flex:0 0 30px}
 .binfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
@@ -197,6 +213,17 @@ input{font:inherit;color:inherit;-webkit-user-select:text;user-select:text}
 #ruota svg{width:56px;height:56px}
 body.orizz:not(.in-run) #ruota{display:flex}
 
+/* giri, ripetizioni, menu della scheda */
+.mini{display:flex;align-items:center;gap:4px}
+.mini .pm{width:34px}
+.mini .val{min-width:24px;font-size:18px}
+.trat{color:var(--muted);font-size:18px;padding:0 2px}
+.bcard.ingiro{box-shadow:inset 4px 0 0 #0891b2}
+.giro-badge{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;background:#0891b2;color:#fff;margin-left:6px;vertical-align:2px}
+.modo{min-height:36px;padding:0 10px;border-radius:10px;background:var(--card2);font-size:13px;font-weight:700;color:var(--txt);flex:0 0 auto}
+.eq{font-size:13px;white-space:nowrap}
+.sub{display:block;font-size:12px;color:var(--muted);line-height:1.3}
+
 /* libreria esercizi */
 .chips{flex:0 0 auto;display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
@@ -289,17 +316,36 @@ body.orizz:not(.in-run) #ruota{display:flex}
     <div class="corpo-ed">
       <input class="inp" id="ed-nome" maxlength="30" placeholder="Nome del timer" autocomplete="off" enterkeyhint="done">
       <div class="colori" id="ed-colori"></div>
+      <div class="ed-scroll">
       <div class="campo" data-k="prep">
         <span class="et"><i class="pallino" style="background:#f59e0b"></i>Preparazione</span>
         <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
       </div>
       <ul class="blocchi" id="ed-blocchi"></ul>
+      <div class="campo" data-k="giri">
+        <span class="et"><i class="pallino" style="background:#0891b2"></i>Giri totali</span>
+        <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
+      </div>
+      <div class="campo" id="ed-tratto" hidden>
+        <span class="et">Blocchi</span>
+        <span class="mini" data-k="gda"><button class="pm" data-d="-1" aria-label="Primo blocco indietro">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Primo blocco avanti">+</button></span>
+        <span class="trat">–</span>
+        <span class="mini" data-k="ga"><button class="pm" data-d="-1" aria-label="Ultimo blocco indietro">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Ultimo blocco avanti">+</button></span>
+      </div>
+      <div class="campo" data-k="grec" id="ed-grec" hidden>
+        <span class="et">Recupero tra i giri</span>
+        <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
+      </div>
       <div class="campo" data-k="defat">
         <span class="et"><i class="pallino" style="background:#7c3aed"></i>Defaticamento</span>
         <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
       </div>
+      </div>
       <div class="tot">Durata totale <b class="num" id="ed-tot">0:00</b></div>
-      <button class="pericolo" id="ed-elimina">Elimina timer</button>
+      <div class="ed-azioni" id="ed-azioni">
+        <button id="ed-dup">Duplica</button>
+        <button id="ed-elimina" class="rosso">Elimina</button>
+      </div>
     </div>
   </section>
 
@@ -439,6 +485,10 @@ body.orizz:not(.in-run) #ruota{display:flex}
     </header>
     <div class="imp-corpo">
       <div class="gruppo" id="imp-opzioni"></div>
+      <div class="campo" data-k="secrip">
+        <span class="et"><span>Secondi per ripetizione<small class="sub">Partenza per i nuovi esercizi</small></span></span>
+        <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
+      </div>
       <div class="titolino">Dati</div>
       <div class="dati">
         <button id="d-esporta">Esporta</button>
@@ -466,8 +516,8 @@ body.orizz:not(.in-run) #ruota{display:flex}
 
 <script>
 'use strict';
-const VERSIONE = 'v3.1';
-const NOTE = '<b>v3.1</b> — Libreria completa: 799 esercizi tra corpo libero, stretching, manubri, kettlebell, elastici, palla medica e corda, con nomi e istruzioni in italiano; aggiunti esercizi di core, mobilità e yoga e cardio da circuito (plank, gatto-mucca, saluto al sole, skip, shadow boxing…).<br>' + '<b>v3.0</b> — Libreria di esercizi: nuova schermata Esercizi con ricerca e filtri per gruppo muscolare e attrezzo, scheda con le istruzioni, esercizi personali. Negli intervalli il pulsante libreria permette di scegliere l’esercizio; quelli “per lato” creano due intervalli, destra e sinistra. Primo blocco: kettlebell, palla medica, corda e cardio.<br>' + '<b>v2.3</b> — Nuova icona: cronometro con guantone da boxe, bianco su fondo arancione.<br>' + '<b>v2.2</b> — Predisposizione per la libreria di esercizi: l’app legge il file esercizi.json, suggerisce gli esercizi mentre scrivi e li collega agli intervalli; la libreria entra in esportazione e importazione.<br>' + '<b>v2.1</b> — Intervalli riordinabili con le frecce ↑ ↓; pulsante “Fatto” del blocco più visibile, in alto a destra.<br>' + '<b>v2.0</b> — Allenamenti a blocchi: ogni blocco ha i suoi intervalli di lavoro e riposo, il numero di ripetizioni e un recupero finale facoltativo. Ogni intervallo di lavoro può avere il nome dell’esercizio, mostrato e annunciato durante l’allenamento. Nuovo modello “Circuito”. I timer creati con la v1 vengono convertiti in automatico.<br>'
+const VERSIONE = 'v4.3';
+const NOTE = '<b>v4.3</b> — Scorrendo una scheda verso sinistra compaiono Duplica ed Elimina.<br>' + '<b>v4.2</b> — Pagina principale: toccando una scheda si apre la modifica, il pulsante verde ▶ avvia l’allenamento; tenendo premuta una scheda la si trascina per cambiare l’ordine. Duplica ed Elimina sono in fondo all’editor.<br>' + '<b>v4.1</b> — Secondi per ripetizione regolabili per ogni esercizio; il valore nelle Impostazioni (2 s) vale come partenza per i nuovi.<br>' + '<b>v4.0</b> — Menu ⋯ sulle schede con Modifica, Duplica ed Elimina. Intervalli di lavoro a tempo o a ripetizioni. Giri totali: ripetono tutto il workout o un tratto di blocchi, con recupero tra i giri.<br>' + '<b>v3.1</b> — Libreria completa: 799 esercizi tra corpo libero, stretching, manubri, kettlebell, elastici, palla medica e corda, con nomi e istruzioni in italiano; aggiunti esercizi di core, mobilità e yoga e cardio da circuito (plank, gatto-mucca, saluto al sole, skip, shadow boxing…).<br>' + '<b>v3.0</b> — Libreria di esercizi: nuova schermata Esercizi con ricerca e filtri per gruppo muscolare e attrezzo, scheda con le istruzioni, esercizi personali. Negli intervalli il pulsante libreria permette di scegliere l’esercizio; quelli “per lato” creano due intervalli, destra e sinistra. Primo blocco: kettlebell, palla medica, corda e cardio.<br>' + '<b>v2.3</b> — Nuova icona: cronometro con guantone da boxe, bianco su fondo arancione.<br>' + '<b>v2.2</b> — Predisposizione per la libreria di esercizi: l’app legge il file esercizi.json, suggerisce gli esercizi mentre scrivi e li collega agli intervalli; la libreria entra in esportazione e importazione.<br>' + '<b>v2.1</b> — Intervalli riordinabili con le frecce ↑ ↓; pulsante “Fatto” del blocco più visibile, in alto a destra.<br>' + '<b>v2.0</b> — Allenamenti a blocchi: ogni blocco ha i suoi intervalli di lavoro e riposo, il numero di ripetizioni e un recupero finale facoltativo. Ogni intervallo di lavoro può avere il nome dell’esercizio, mostrato e annunciato durante l’allenamento. Nuovo modello “Circuito”. I timer creati con la v1 vengono convertiti in automatico.<br>'
   + '<b>v1.1</b> — Schermata di allenamento anche in orizzontale; le altre schermate chiedono di ruotare il telefono.<br>'
   + '<b>v1.0</b> — Prima versione.';
 const LS = { timer: 'ti_timer', imp: 'ti_impostazioni', run: 'ti_in_corso', esercizi: 'ti_esercizi', recenti: 'ti_recenti' };
@@ -485,11 +535,12 @@ const FASI = {
   lavoro:   { nome: 'Lavoro',        col: '#22c55e', txt: '#05230f' },
   riposo:   { nome: 'Riposo',        col: '#dc2626', txt: '#ffffff' },
   recupero: { nome: 'Recupero',      col: '#2563eb', txt: '#ffffff' },
+  recGiro:  { nome: 'Recupero tra i giri', col: '#0891b2', txt: '#ffffff' },
   defat:    { nome: 'Defaticamento', col: '#7c3aed', txt: '#ffffff' }
 };
 const MAXT = 5999;
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
-const L = (dur, es = '') => ({ tipo: 'lavoro', dur, es, esId: '' });
+const L = (dur, es = '') => ({ tipo: 'lavoro', dur, es, esId: '', modo: 'tempo', rip: 10, secRip: 2 });
 const R = dur => ({ tipo: 'riposo', dur, es: '' });
 const blocco = (intervalli, rip = 1, rec = 0, nome = '') => ({ id: uid(), nome, rip, rec, intervalli });
 function modelli() {
@@ -522,7 +573,9 @@ function normalizza(t) {
         if (!i) return null;
         const d = intero(i.dur, 1, MAXT); if (d === null) return null;
         const lav = i.tipo !== 'riposo';
-        return { tipo: lav ? 'lavoro' : 'riposo', dur: d, es: lav ? String(i.es || '').slice(0, 80) : '', esId: lav ? String(i.esId || '').slice(0, 60) : '' };
+        return { tipo: lav ? 'lavoro' : 'riposo', dur: d, es: lav ? String(i.es || '').slice(0, 80) : '', esId: lav ? String(i.esId || '').slice(0, 60) : '',
+          modo: lav && i.modo === 'rip' ? 'rip' : 'tempo', rip: intero(i.rip, 1, 999) ?? Math.max(1, Math.round(d / 2)),
+          secRip: Math.max(1, Math.min(10, Math.round((Number(i.secRip) || 2) * 2) / 2)) };
       }).filter(Boolean);
       if (!ints.length) return null;
       return { id: String(b.id || uid()), nome: String(b.nome || '').slice(0, 30), rip: intero(b.rip, 1, 99) ?? 1, rec: intero(b.rec, 0, MAXT) ?? 0, intervalli: ints };
@@ -537,14 +590,18 @@ function normalizza(t) {
       o.blocchi.push(blocco(ints, rip, c < cic - 1 ? rc : 0, cic > 1 ? `Ciclo ${c + 1}` : ''));
     }
   }
-  return o.blocchi.length ? o : null;
+  if (!o.blocchi.length) return null;
+  const g = t.giri && typeof t.giri === 'object' ? t.giri : {}, nb = o.blocchi.length;
+  const da = Math.min(intero(g.da, 0, 98) ?? 0, nb - 1);
+  o.giri = { n: intero(g.n, 1, 99) ?? 1, da, a: Math.max(da, Math.min(intero(g.a, 0, 98) ?? nb - 1, nb - 1)), rec: intero(g.rec, 0, MAXT) ?? 0 };
+  return o;
 }
 
 let timers = leggi(LS.timer, null);
 if (!Array.isArray(timers)) timers = modelli();
 else timers = timers.map(normalizza).filter(Boolean);
 scrivi(LS.timer, timers);
-const IMP_DEF = { suoni: true, countdown: true, tic: false, voce: true, vibra: true, schermo: true };
+const IMP_DEF = { suoni: true, countdown: true, tic: false, voce: true, vibra: true, schermo: true, secRip: 2 };
 let imp = Object.assign({}, IMP_DEF, leggi(LS.imp, {}));
 
 /* ---------- utilità ---------- */
@@ -557,28 +614,50 @@ function fmtBreve(s) { return s < 60 ? `${s}s` : fmt(s); }
 function esc(t) { return String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function clona(o) { return JSON.parse(JSON.stringify(o)); }
 
+function secPerRip() { const v = typeof imp === 'object' && imp ? Number(imp.secRip) : 2; return v > 0 ? v : 2; }
+/* durata effettiva di un intervallo: a ripetizioni = ripetizioni × secondi per ripetizione */
+function durInt(it) { return it.tipo === 'lavoro' && it.modo === 'rip' ? Math.max(1, Math.round(it.rip * (Number(it.secRip) || secPerRip()))) : it.dur; }
+function giriDi(t) {
+  const nb = t.blocchi.length, g = t.giri || {};
+  const da = Math.max(0, Math.min(g.da | 0, nb - 1));
+  const a = Math.max(da, Math.min(g.a == null ? nb - 1 : g.a | 0, nb - 1));
+  return { n: Math.max(1, g.n | 0 || 1), da, a, rec: Math.max(0, g.rec | 0) };
+}
+function fmtInt(it) { return it.tipo === 'lavoro' && it.modo === 'rip' ? `${it.rip} rip` : fmtBreve(it.dur); }
 /* Sequenza delle fasi.
-   Nell'ultima ripetizione di un blocco i riposi finali si saltano se segue il recupero o se è l'ultimo blocco.
-   Il recupero dopo l'ultimo blocco non si fa. */
+   I blocchi da G.da a G.a si ripetono G.n volte (giri), con un recupero tra un giro e l'altro.
+   Nell'ultima ripetizione di un blocco i riposi finali si saltano se segue un recupero o se è la fine.
+   Il recupero del blocco non si fa dopo l'ultimo blocco; a fine giro, se c'è il recupero tra i giri, vale quello. */
 function sequenza(t) {
   const s = [], B = t.blocchi;
+  if (!B.length) return { seg: [], totale: 0 };
+  const G = giriDi(t), occ = [];
+  for (let bi = 0; bi < G.da; bi++) occ.push({ bi, g: 0 });
+  for (let g = 1; g <= G.n; g++) for (let bi = G.da; bi <= G.a; bi++) occ.push({ bi, g });
+  for (let bi = G.a + 1; bi < B.length; bi++) occ.push({ bi, g: 0 });
   if (t.prep > 0) s.push({ fase: 'prep', dur: t.prep });
-  B.forEach((b, bi) => {
-    const ultimo = bi === B.length - 1;
+  occ.forEach((o, k) => {
+    const b = B[o.bi], ultimo = k === occ.length - 1;
+    let rec = null;
+    if (o.g > 0 && o.bi === G.a && o.g < G.n && G.rec > 0) rec = { fase: 'recGiro', dur: G.rec, b: o.bi, g: o.g };
+    else if (b.rec > 0 && !ultimo) rec = { fase: 'recupero', dur: b.rec, b: o.bi, g: o.g };
     for (let r = 1; r <= b.rip; r++) {
       let ints = b.intervalli;
-      if (r === b.rip && (b.rec > 0 || ultimo)) {
-        let k = ints.length; while (k > 0 && ints[k - 1].tipo === 'riposo') k--;
-        ints = ints.slice(0, k);
+      if (r === b.rip && (rec || ultimo)) {
+        let k2 = ints.length; while (k2 > 0 && ints[k2 - 1].tipo === 'riposo') k2--;
+        ints = ints.slice(0, k2);
       }
       let primo = true;
       ints.forEach(it => {
-        const sg = { fase: it.tipo, dur: it.dur, es: it.es || '', b: bi, r };
-        if (it.tipo === 'lavoro' && primo) { sg.primo = true; primo = false; }
+        const sg = { fase: it.tipo, dur: durInt(it), es: it.es || '', rip: it.tipo === 'lavoro' && it.modo === 'rip' ? it.rip : 0, b: o.bi, r, g: o.g };
+        if (it.tipo === 'lavoro' && primo) {
+          sg.primo = true; primo = false;
+          if (o.g > 0 && o.bi === G.da && r === 1) sg.inizioGiro = true;
+        }
         s.push(sg);
       });
     }
-    if (b.rec > 0 && !ultimo) s.push({ fase: 'recupero', dur: b.rec, b: bi });
+    if (rec) s.push(rec);
   });
   if (t.defat > 0) s.push({ fase: 'defat', dur: t.defat });
   let acc = 0;
@@ -588,9 +667,10 @@ function sequenza(t) {
 function riassunto(t) {
   if (t.blocchi.length === 1) {
     const b = t.blocchi[0];
-    return b.intervalli.map(i => fmtBreve(i.dur)).join(' / ') + (b.rip > 1 ? ' × ' + b.rip : '');
+    return b.intervalli.map(fmtInt).join(' / ') + (b.rip > 1 ? ' × ' + b.rip : '') + (giriDi(t).n > 1 ? ` · ${giriDi(t).n} giri` : '');
   }
-  return `${t.blocchi.length} blocchi · ` + t.blocchi.map(b => b.nome).filter(Boolean).join(', ');
+  const G = giriDi(t);
+  return `${t.blocchi.length} blocchi` + (G.n > 1 ? ` · ${G.n} giri` : '') + ' · ' + t.blocchi.map(b => b.nome).filter(Boolean).join(', ');
 }
 
 /* ---------- navigazione ---------- */
@@ -655,30 +735,144 @@ $('mod-no').onclick = () => { $('modale').hidden = true; modCb = null; };
 $('mod-si').onclick = () => { $('modale').hidden = true; const f = modCb; modCb = null; if (f) f(); };
 
 /* ---------- HOME ---------- */
-const ICO_MOD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
+const ICO_DUP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>';
+const ICO_DEL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>';
+const ICO_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>';
 function disegnaHome() {
+  rigaAperta = null;
   const ul = $('lista');
   if (!timers.length) ul.innerHTML = '<li class="vuoto">Nessun timer.<br>Tocca “+ Nuovo timer” per crearne uno.</li>';
   else ul.innerHTML = timers.map(t => `
-    <li class="card" data-id="${t.id}">
+    <li class="riga-card" data-id="${t.id}">
+     <div class="dietro">
+      <button class="b-dup" data-azione="dup" tabindex="-1">${ICO_DUP}Duplica</button>
+      <button class="b-del" data-azione="del" tabindex="-1">${ICO_DEL}Elimina</button>
+     </div>
+     <div class="card">
       <div class="striscia" style="background:${t.colore}"></div>
-      <button class="corpo" data-azione="avvia">
+      <button class="corpo" data-azione="modifica">
         <span class="nome taglia">${esc(t.nome)}</span>
         <span class="riass num taglia">${esc(riassunto(t))}</span>
       </button>
-      <button class="dur num" data-azione="avvia">${fmt(sequenza(t).totale)}</button>
-      <button class="mod" data-azione="modifica" aria-label="Modifica">${ICO_MOD}</button>
+      <button class="dur num" data-azione="modifica">${fmt(sequenza(t).totale)}</button>
+      <button class="play" data-azione="avvia" aria-label="Avvia ${esc(t.nome)}">${ICO_PLAY}</button>
+     </div>
     </li>`).join('');
   const r = leggi(LS.run, null);
   const tr = r && normalizza(r.timer);
   $('riprendi').hidden = !tr;
   if (tr) $('riprendi-testo').textContent = `“${tr.nome}” interrotto a ${fmt(r.trascorso / 1000)}`;
 }
+/* ---------- schede: tocco, scorrimento laterale (Duplica/Elimina), pressione lunga (riordino) ---------- */
+const APERTURA = 168;   /* larghezza dei due pulsanti dietro la scheda */
+const gesto = { attesa: null, riga: null, modo: '', x0: 0, y0: 0, y: 0, base: 0, dx: 0, presa: 0, raf: 0, appenaFinito: false };
+let rigaAperta = null;
+function spostaScheda(riga, x) {
+  const c = riga.querySelector('.card');
+  c.style.transform = x ? `translateX(${x}px)` : '';
+  if (x) riga.classList.add('aperta');
+  else setTimeout(() => { if (!c.style.transform) riga.classList.remove('aperta'); }, 220);
+}
+function chiudiAperta() { if (rigaAperta) { spostaScheda(rigaAperta, 0); rigaAperta = null; } }
+function annullaAttesa() { if (gesto.attesa) { clearTimeout(gesto.attesa); gesto.attesa = null; } }
+function duplicaTimer(id) {
+  const i = timers.findIndex(x => x.id === id), t = timers[i]; if (!t) return;
+  const c = clona(t); c.id = uid(); c.nome = (t.nome + ' (copia)').slice(0, 30);
+  c.blocchi.forEach(x => { x.id = uid(); });
+  timers.splice(i + 1, 0, c); scrivi(LS.timer, timers); disegnaHome();
+}
 $('lista').addEventListener('click', e => {
+  if (gesto.appenaFinito) { gesto.appenaFinito = false; return; }
   const b = e.target.closest('button[data-azione]'); if (!b) return;
-  const t = timers.find(x => x.id === b.closest('.card').dataset.id); if (!t) return;
-  if (b.dataset.azione === 'avvia') avviaRun(t, 0, true); else apriEditor(t);
+  const riga = b.closest('.riga-card'), id = riga.dataset.id, t = timers.find(x => x.id === id); if (!t) return;
+  const az = b.dataset.azione;
+  if (az === 'dup') { rigaAperta = null; duplicaTimer(id); return; }
+  if (az === 'del') { conferma(`Eliminare “${t.nome}”?`, () => { rigaAperta = null; timers = timers.filter(x => x.id !== id); scrivi(LS.timer, timers); disegnaHome(); }, 'Elimina'); return; }
+  if (rigaAperta) { chiudiAperta(); return; }   /* con una scheda aperta, il tocco la richiude */
+  if (az === 'avvia') avviaRun(t, 0, true); else apriEditor(t);
 });
+$('lista').addEventListener('pointerdown', e => {
+  gesto.appenaFinito = false;   /* un nuovo tocco annulla il filtro del clic di fine gesto */
+  const riga = e.target.closest('.riga-card');
+  if (!riga || e.target.closest('.dietro') || (e.pointerType === 'mouse' && e.button !== 0)) return;
+  if (rigaAperta && rigaAperta !== riga) chiudiAperta();
+  Object.assign(gesto, { riga, modo: '', x0: e.clientX, y0: e.clientY, y: e.clientY, dx: 0, base: riga === rigaAperta ? -APERTURA : 0 });
+  annullaAttesa();
+  if (!e.target.closest('.play') && riga !== rigaAperta) gesto.attesa = setTimeout(iniziaTrascinamento, 450);
+});
+function iniziaTrascinamento() {
+  gesto.attesa = null; gesto.modo = 'riordino';
+  const riga = gesto.riga;
+  gesto.presa = gesto.y - riga.getBoundingClientRect().top;
+  riga.classList.add('trascina');
+  vibra(15);
+  gesto.raf = requestAnimationFrame(scorriBordo);
+}
+function posizionaTrascinata() {
+  const el = gesto.riga, ul = $('lista');
+  el.style.transform = '';
+  const cima = gesto.y - gesto.presa; let r = el.getBoundingClientRect();
+  for (let k = 0; k < 50; k++) {
+    const prev = el.previousElementSibling, next = el.nextElementSibling;
+    if (prev && prev.classList.contains('riga-card')) {
+      const pr = prev.getBoundingClientRect();
+      if (cima < pr.top + pr.height / 2) { ul.insertBefore(el, prev); r = el.getBoundingClientRect(); continue; }
+    }
+    if (next && next.classList.contains('riga-card')) {
+      const nr = next.getBoundingClientRect();
+      if (cima + r.height > nr.top + nr.height / 2) { ul.insertBefore(next, el); r = el.getBoundingClientRect(); continue; }
+    }
+    break;
+  }
+  el.style.transform = `translateY(${cima - r.top}px)`;
+}
+function scorriBordo() {
+  if (gesto.modo !== 'riordino') return;
+  const ul = $('lista'), r = ul.getBoundingClientRect(), m = 60;
+  let v = 0;
+  if (gesto.y < r.top + m) v = -Math.ceil((r.top + m - gesto.y) / 6);
+  else if (gesto.y > r.bottom - m) v = Math.ceil((gesto.y - (r.bottom - m)) / 6);
+  if (v) { ul.scrollTop += v; posizionaTrascinata(); }
+  gesto.raf = requestAnimationFrame(scorriBordo);
+}
+document.addEventListener('pointermove', e => {
+  if (!gesto.riga) return;
+  const dx = e.clientX - gesto.x0, dy = e.clientY - gesto.y0;
+  gesto.y = e.clientY;
+  if (gesto.modo === 'riordino') { posizionaTrascinata(); return; }
+  if (!gesto.modo) {
+    if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) { gesto.modo = 'laterale'; annullaAttesa(); gesto.riga.classList.add('muove'); }
+    else if (Math.abs(dy) > 10) { gesto.modo = 'scorri'; annullaAttesa(); }
+  }
+  if (gesto.modo === 'laterale') {
+    gesto.dx = dx;
+    spostaScheda(gesto.riga, Math.max(-APERTURA - 20, Math.min(0, gesto.base + dx)));
+  }
+});
+/* mentre si trascina o si scorre di lato, il dito non deve far scorrere l'elenco */
+$('lista').addEventListener('touchmove', e => { if (gesto.modo === 'riordino' || gesto.modo === 'laterale') e.preventDefault(); }, { passive: false });
+function fineGesto() {
+  annullaAttesa();
+  const riga = gesto.riga, modo = gesto.modo;
+  gesto.riga = null; gesto.modo = '';
+  if (!riga) return;
+  if (modo === 'laterale') {
+    riga.classList.remove('muove');
+    const pos = gesto.base + gesto.dx;
+    if (pos < -APERTURA / 2.5) { spostaScheda(riga, -APERTURA); rigaAperta = riga; }
+    else { spostaScheda(riga, 0); if (rigaAperta === riga) rigaAperta = null; }
+    gesto.appenaFinito = true; setTimeout(() => { gesto.appenaFinito = false; }, 400);
+  } else if (modo === 'riordino') {
+    cancelAnimationFrame(gesto.raf);
+    riga.classList.remove('trascina'); riga.style.transform = '';
+    const ordine = [...$('lista').querySelectorAll('.riga-card')].map(c => c.dataset.id);
+    const nuovi = ordine.map(id => timers.find(t => t.id === id)).filter(Boolean);
+    if (nuovi.length === timers.length) { timers = nuovi; scrivi(LS.timer, timers); }
+    gesto.appenaFinito = true; setTimeout(() => { gesto.appenaFinito = false; }, 400);
+    disegnaHome();
+  }
+}
+['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, fineGesto));
 $('btn-nuovo').onclick = () => apriEditor(null);
 $('btn-imp').onclick = () => { disegnaImp(); mostra('imp'); };
 $('riprendi-no').onclick = () => { cancella(LS.run); disegnaHome(); };
@@ -686,6 +880,7 @@ $('riprendi-si').onclick = () => {
   const r = leggi(LS.run, null), t = r && normalizza(r.timer);
   if (t) avviaRun(t, r.trascorso || 0, false); else { cancella(LS.run); disegnaHome(); }
 };
+$('lista').addEventListener('contextmenu', e => e.preventDefault());
 
 /* ---------- EDITOR DELL'ALLENAMENTO ---------- */
 let bozza = null, bozzaNuova = false, bIdx = 0;
@@ -694,27 +889,33 @@ function apriEditor(t) {
   bozza = t ? clona(t) : { id: uid(), nome: '', colore: COLORI[timers.length % COLORI.length], prep: 10, defat: 0, blocchi: [blocco([L(30), R(15)], 8)] };
   $('ed-titolo').textContent = bozzaNuova ? 'Nuovo timer' : 'Modifica timer';
   $('ed-nome').value = bozza.nome;
-  $('ed-elimina').hidden = bozzaNuova;
+  $('ed-azioni').hidden = bozzaNuova;
   $('ed-colori').innerHTML = COLORI.map(c => `<button data-c="${c}" style="background:${c}" aria-label="Colore"></button>`).join('');
   disegnaEditor();
   mostra('edit');
 }
 function riassBlocco(b) {
-  const parti = b.intervalli.map(i => (i.es ? i.es + ' ' : '') + fmtBreve(i.dur));
+  const parti = b.intervalli.map(i => (i.es ? i.es + ' ' : '') + fmtInt(i));
   return `×${b.rip} · ` + parti.join(' / ') + (b.rec ? ` · rec ${fmtBreve(b.rec)}` : '');
 }
 function durateBlocchi() {
   const d = bozza.blocchi.map(() => 0);
-  sequenza(bozza).seg.forEach(s => { if (s.b != null) d[s.b] += s.dur; });
+  sequenza(bozza).seg.forEach(s => { if (s.b != null && s.fase !== 'recGiro' && (s.g || 1) === 1) d[s.b] += s.dur; });
   return d;
+}
+function sistemaGiri() {
+  if (!bozza.giri) bozza.giri = { n: 1, da: 0, a: bozza.blocchi.length - 1, rec: 0 };
+  const G = giriDi(bozza); bozza.giri.da = G.da; bozza.giri.a = G.a;
 }
 function disegnaEditor() {
   bozza.nome = $('ed-nome').value;
-  const d = durateBlocchi();
+  sistemaGiri();
+  const d = durateBlocchi(), G = giriDi(bozza);
+  const inGiro = i => G.n > 1 && i >= G.da && i <= G.a;
   $('ed-blocchi').innerHTML = bozza.blocchi.map((b, i) => `
-    <li><button class="bcard" data-i="${i}">
+    <li><button class="bcard${inGiro(i) ? ' ingiro' : ''}" data-i="${i}">
       <span class="bnum num">${i + 1}</span>
-      <span class="binfo"><span class="bnome taglia">${esc(b.nome || 'Blocco ' + (i + 1))}</span><span class="briass taglia">${esc(riassBlocco(b))}</span></span>
+      <span class="binfo"><span class="bnome taglia">${esc(b.nome || 'Blocco ' + (i + 1))}${inGiro(i) ? `<span class="giro-badge">↻ ${G.n}</span>` : ''}</span><span class="briass taglia">${esc(riassBlocco(b))}</span></span>
       <span class="bdur num">${fmt(d[i])}</span><span class="bfreccia">›</span>
     </button></li>`).join('') + '<li><button class="aggiungi" id="ed-agg">+ Aggiungi blocco</button></li>';
   valoriEditor();
@@ -722,6 +923,12 @@ function disegnaEditor() {
 function valoriEditor() {
   document.querySelector('#v-edit .campo[data-k=prep] .val').textContent = bozza.prep ? fmt(bozza.prep) : '—';
   document.querySelector('#v-edit .campo[data-k=defat] .val').textContent = bozza.defat ? fmt(bozza.defat) : '—';
+  const G = giriDi(bozza), multi = G.n > 1;
+  document.querySelector('#v-edit .campo[data-k=giri] .val').textContent = multi ? '× ' + G.n : '—';
+  $('ed-tratto').hidden = !multi; $('ed-grec').hidden = !multi;
+  document.querySelector('#ed-tratto [data-k=gda] .val').textContent = G.da + 1;
+  document.querySelector('#ed-tratto [data-k=ga] .val').textContent = G.a + 1;
+  document.querySelector('#v-edit .campo[data-k=grec] .val').textContent = G.rec ? fmt(G.rec) : '—';
   document.querySelectorAll('#ed-colori button').forEach(b => b.classList.toggle('sel', b.dataset.c === bozza.colore));
   $('ed-tot').textContent = fmt(sequenza(bozza).totale);
 }
@@ -741,6 +948,15 @@ $('ed-salva').onclick = () => {
   const i = timers.findIndex(x => x.id === bozza.id);
   if (i >= 0) timers[i] = bozza; else timers.push(bozza);
   scrivi(LS.timer, timers); tornaHome();
+};
+/* Duplica: crea una copia del timer così com'è nell'editor (modifiche comprese) sotto l'originale.
+   L'originale resta com'era salvato. */
+$('ed-dup').onclick = () => {
+  const c = clona(bozza); c.id = uid();
+  c.nome = (($('ed-nome').value.trim() || bozza.nome || 'Timer') + ' (copia)').slice(0, 30);
+  c.blocchi.forEach(x => { x.id = uid(); });
+  const i = timers.findIndex(x => x.id === bozza.id);
+  timers.splice(i >= 0 ? i + 1 : timers.length, 0, c); scrivi(LS.timer, timers); tornaHome();
 };
 $('ed-elimina').onclick = () => conferma(`Eliminare “${bozza.nome || 'questo timer'}”?`, () => {
   timers = timers.filter(x => x.id !== bozza.id); scrivi(LS.timer, timers); tornaHome();
@@ -770,9 +986,13 @@ function disegnaBlocco() {
         <button class="lib" data-az="lib" aria-label="Scegli dalla libreria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h5"/></svg></button>
       </div>` : ''}
       <div class="ir">
-        <span class="lbl">Durata</span>
+        ${it.tipo === 'lavoro' ? `<button class="modo" data-az="modo">${it.modo === 'rip' ? 'Rip.' : 'Tempo'}</button><span class="lbl eq num"></span>` : '<span class="lbl">Durata</span>'}
         <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
       </div>
+      ${it.tipo === 'lavoro' && it.modo === 'rip' ? `<div class="ir" data-k="s:${n}">
+        <span class="lbl">Secondi per ripetizione</span>
+        <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num sr"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
+      </div>` : ''}
     </li>`).join('') + `
     <li class="aggint"><button class="l" data-az="addL">+ Lavoro</button><button class="r" data-az="addR">+ Riposo</button></li>`;
   $('bl-su').disabled = bIdx === 0;
@@ -784,7 +1004,11 @@ function valoriBlocco() {
   document.querySelector('#v-blocco .campo[data-k=rip] .val').textContent = b.rip;
   document.querySelector('#v-blocco .campo[data-k=rec] .val').textContent = b.rec ? fmt(b.rec) : '—';
   b.intervalli.forEach((it, n) => {
-    const el = document.querySelector(`#bl-int [data-k="i:${n}"] .val`); if (el) el.textContent = fmt(it.dur);
+    const el = document.querySelector(`#bl-int [data-k="i:${n}"] .val`);
+    const rip = it.tipo === 'lavoro' && it.modo === 'rip';
+    if (el) el.textContent = rip ? `${it.rip} rip` : fmt(it.dur);
+    const eq = document.querySelector(`#bl-int [data-k="i:${n}"] .eq`); if (eq) eq.textContent = rip ? '= ' + fmt(durInt(it)) : '';
+    const sr = document.querySelector(`#bl-int [data-k="s:${n}"] .sr`); if (sr) sr.textContent = String(it.secRip).replace('.', ',') + ' s';
   });
   $('bl-titolo').textContent = `Blocco ${bIdx + 1} · ${fmt(durateBlocchi()[bIdx])}`;
 }
@@ -809,7 +1033,12 @@ $('bl-int').addEventListener('click', e => {
   if (az === 'tipo') {
     const it = b.intervalli[n];
     it.tipo = it.tipo === 'lavoro' ? 'riposo' : 'lavoro';
-    if (it.tipo === 'riposo') it.es = '';
+    if (it.tipo === 'riposo') { it.es = ''; it.esId = ''; }
+    disegnaBlocco();
+  } else if (az === 'modo') {
+    const it = b.intervalli[n];
+    if (it.modo === 'rip') { it.dur = durInt(it); it.modo = 'tempo'; }
+    else { it.secRip = secPerRip(); it.rip = Math.max(1, Math.round(it.dur / it.secRip)); it.modo = 'rip'; }
     disegnaBlocco();
   } else if (az === 'su' || az === 'giu') {
     const m = az === 'su' ? n - 1 : n + 1, I = b.intervalli;
@@ -850,24 +1079,40 @@ function nuovoTempo(v, d, min) {
   return Math.max(min, Math.min(MAXT, v));
 }
 function cambia(k, d) {
-  if (vista === 'edit') { bozza[k] = nuovoTempo(bozza[k], d, 0); disegnaEditor(); return; }
+  if (vista === 'edit') {
+    sistemaGiri(); const g = bozza.giri, ult = bozza.blocchi.length - 1;
+    if (k === 'giri') { const prima = g.n; g.n = Math.max(1, Math.min(99, g.n + d)); if (prima === 1 && g.n > 1) { g.da = 0; g.a = ult; } }
+    else if (k === 'gda') g.da = Math.max(0, Math.min(g.a, g.da + d));
+    else if (k === 'ga') g.a = Math.max(g.da, Math.min(ult, g.a + d));
+    else if (k === 'grec') g.rec = nuovoTempo(g.rec, d, 0);
+    else bozza[k] = nuovoTempo(bozza[k], d, 0);
+    disegnaEditor(); return;
+  }
+  if (vista === 'imp') { imp.secRip = Math.max(1, Math.min(10, Math.round((imp.secRip + d * 0.5) * 2) / 2)); scrivi(LS.imp, imp); valoriImp(); return; }
   if (vista === 'mioes') { mioBozza.durata = nuovoTempo(mioBozza.durata, d, 0); valoriMioEs(); return; }
   const b = bozza.blocchi[bIdx];
   if (k === 'rip') b.rip = Math.max(1, Math.min(99, b.rip + d));
   else if (k === 'rec') b.rec = nuovoTempo(b.rec, d, 0);
-  else { const it = b.intervalli[+k.slice(2)]; it.dur = nuovoTempo(it.dur, d, 1); }
+  else if (k.startsWith('s:')) {
+    const it = b.intervalli[+k.slice(2)];
+    it.secRip = Math.max(1, Math.min(10, Math.round(((Number(it.secRip) || 2) + d * 0.5) * 2) / 2));
+  } else {
+    const it = b.intervalli[+k.slice(2)];
+    if (it.tipo === 'lavoro' && it.modo === 'rip') it.rip = Math.max(1, Math.min(999, it.rip + d));
+    else it.dur = nuovoTempo(it.dur, d, 1);
+  }
   valoriBlocco();
 }
-let rip = null;
-function stopRip() { if (rip) { clearTimeout(rip.t); rip = null; } }
+let ripPm = null;   /* ripetizione automatica dei pulsanti + e − tenuti premuti */
+function stopRip() { if (ripPm) { clearTimeout(ripPm.t); ripPm = null; } }
 document.addEventListener('pointerdown', e => {
   const b = e.target.closest('.pm'); if (!b) return;
   e.preventDefault();
   const k = b.closest('[data-k]').dataset.k, d = +b.dataset.d;
   stopRip(); cambia(k, d);
-  rip = { n: 0 };
-  const giro = () => { cambia(k, d); rip.n++; rip.t = setTimeout(giro, rip.n > 12 ? 45 : 110); };
-  rip.t = setTimeout(giro, 420);
+  ripPm = { n: 0 };
+  const giro = () => { cambia(k, d); ripPm.n++; ripPm.t = setTimeout(giro, ripPm.n > 12 ? 45 : 110); };
+  ripPm.t = setTimeout(giro, 420);
 });
 ['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, stopRip));
 document.addEventListener('pointerout', e => { if (e.target.closest && e.target.closest('.pm')) stopRip(); });
@@ -922,7 +1167,7 @@ function avviaRun(t, daMs, parti) {
   const sq = sequenza(t);
   if (!sq.totale) return avviso('Il timer è vuoto.');
   audio();
-  run = { timer: clona(t), seg: sq.seg, totale: sq.totale, accumulato: daMs, avviatoIl: null, idx: -1, ultimoRim: null, finito: false, salvato: -1 };
+  run = { G: giriDi(t), timer: clona(t), seg: sq.seg, totale: sq.totale, accumulato: daMs, avviatoIl: null, idx: -1, ultimoRim: null, finito: false, salvato: -1 };
   $('r-nome').textContent = t.nome;
   $('r-fine').classList.remove('vis');
   mostra('run');
@@ -956,11 +1201,13 @@ function annuncia(sg) {
   if (sg.fase === 'lavoro') {
     bip(1320, 0.55, 0.45); vibra([250]);
     const b = t.blocchi[sg.b], parti = [];
+    if (sg.inizioGiro && run.G.n > 1) parti.push(sg.g === run.G.n ? `Ultimo giro` : `Giro ${sg.g} di ${run.G.n}`);
     if (sg.primo) {
       if (sg.r === 1 && t.blocchi.length > 1 && b.nome && b.nome !== sg.es) parti.push(b.nome);
       if (b.rip > 1) parti.push(sg.r === b.rip ? 'Ultimo round' : `Round ${sg.r} di ${b.rip}`);
     }
-    parti.push(sg.es || (parti.length ? '' : 'Lavoro'));
+    parti.push(sg.es || (parti.length && !sg.rip ? '' : 'Lavoro'));
+    if (sg.rip) parti.push(`${sg.rip} ripetizioni`);
     setTimeout(() => parla(parti.filter(Boolean).join('. ')), 350);
   } else {
     bip(660, 0.55, 0.45); vibra([120, 80, 120]);
@@ -969,7 +1216,7 @@ function annuncia(sg) {
 }
 function testoProssimo(pr) {
   if (!pr) return 'Fine';
-  return `${pr.es || FASI[pr.fase].nome} ${fmt(pr.dur)}`;
+  return pr.rip ? `${pr.es || 'Lavoro'} ${pr.rip} rip` : `${pr.es || FASI[pr.fase].nome} ${fmt(pr.dur)}`;
 }
 function aggiornaRun(forza) {
   if (!run || run.finito) return;
@@ -985,9 +1232,11 @@ function aggiornaRun(forza) {
     const v = $('v-run'); v.style.background = f.col; v.style.color = f.txt;
     document.querySelector('meta[name=theme-color]').content = f.col;
     $('r-fase').textContent = f.nome;
-    $('r-eserc').textContent = sg.es || (b && b.nome) || '';
+    const nomeEs = sg.es || (b && b.nome) || '';
+    $('r-eserc').textContent = sg.rip ? (nomeEs ? `${nomeEs} · ${sg.rip} rip` : `${sg.rip} ripetizioni`) : nomeEs;
     $('r-round').textContent = sg.r ? `${sg.r} / ${b.rip}` : '–';
     $('r-blocco').textContent = b ? `${sg.b + 1} / ${run.timer.blocchi.length}` : '–';
+    $('r-nome').textContent = run.timer.nome + (run.G.n > 1 && sg.g > 0 ? ` · giro ${sg.g}/${run.G.n}` : '');
     $('r-pross').textContent = testoProssimo(run.seg[i + 1]);
   } else if (inMoto && rimSeg !== run.ultimoRim && run.ultimoRim !== null) {
     if (imp.countdown && rimSeg <= 3 && rimSeg >= 1) bip(880, 0.12, 0.4);
@@ -1067,7 +1316,11 @@ function disegnaImp() {
       <span>${o.et}<small>${o.sub}</small></span><i class="sw"></i>
     </button>`).join('');
   $('ver-imp').textContent = VERSIONE;
+  valoriImp();
   $('note').innerHTML = NOTE + '<br><br><b>Esercizi</b> — Dati da exercises-dataset di Hasan Emir Yıldırım (licenza MIT); nomi e istruzioni in italiano riscritti, più esercizi integrativi scritti per l’app. Immagini non incluse.';
+}
+function valoriImp() {
+  document.querySelector('#v-imp .campo[data-k=secrip] .val').textContent = String(imp.secRip).replace('.', ',') + ' s';
 }
 $('imp-opzioni').addEventListener('click', e => {
   const b = e.target.closest('.riga'); if (!b) return;
@@ -1103,7 +1356,8 @@ $('d-file').onchange = e => {
       }
       if (d.impostazioni && typeof d.impostazioni === 'object') {
         imp = Object.assign({}, IMP_DEF);
-        Object.keys(IMP_DEF).forEach(k => { if (typeof d.impostazioni[k] === 'boolean') imp[k] = d.impostazioni[k]; });
+        Object.keys(IMP_DEF).forEach(k => { if (typeof d.impostazioni[k] === typeof IMP_DEF[k]) imp[k] = d.impostazioni[k]; });
+        imp.secRip = Math.max(1, Math.min(10, Number(imp.secRip) || 2));
         scrivi(LS.imp, imp);
       }
       disegnaImp();
@@ -1118,9 +1372,10 @@ $('d-reset').onclick = () => conferma('Cancellare tutti i timer e le impostazion
   disegnaImp();
 }, 'Reset');
 
-/* ---------- LIBRERIA DI ESERCIZI (predisposizione) ----------
-   La libreria di base sta nel file esercizi.json della repo: { "versione": 1, "esercizi": [ ... ] }.
-   Ogni esercizio: id, nome, gruppo, attrezzo, nota, durata (secondi, facoltativa), perLato (vero/falso).
+/* ---------- LIBRERIA DI ESERCIZI: dati ----------
+   La libreria di base sta nel file esercizi.json della repo: { "versione": 2, "esercizi": [ ... ] }.
+   Ogni esercizio: id, nome, nomeEn, gruppo, attrezzo, muscoli, stretching, perLato, durata (secondi), istruzioni.
+   Il vecchio campo "nota" degli esercizi personali creati con la v2 viene letto come istruzioni.
    All'avvio il file viene riletto: gli esercizi di base si aggiornano, quelli creati dall'utente restano.
    Gli intervalli tengono il nome (es) e, se corrisponde, l'id dell'esercizio (esId). */
 function normEsercizio(e) {
@@ -1165,7 +1420,7 @@ const ATTREZZI_ORD = ['Corpo libero', 'Manubri', 'Kettlebell', 'Elastico', 'Pall
 const ICO_INFO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg>';
 let libStato = { modo: 'sfoglia', cerca: '', gruppo: '', attrezzo: '', target: null };
 let recenti = (() => { const v = leggi(LS.recenti, []); return Array.isArray(v) ? v.map(String) : []; })();
-function senzaAccenti(t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+function senzaAccenti(t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
 function ordina(valori, ordine) {
   return [...new Set(valori.filter(Boolean))].sort((a, b) => {
     const ia = ordine.indexOf(a), ib = ordine.indexOf(b);
@@ -1247,11 +1502,11 @@ function scegliEsercizio(id, passi) {
   const e = libreria.find(x => x.id === id);
   const b = bozza && bozza.blocchi[bIdx], n = libStato.target, it = b && b.intervalli[n];
   if (!e || !it) return tornaA('blocco', passi);
-  const dur = e.durata || it.dur;
+  const aRip = it.modo === 'rip', dur = aRip ? it.dur : (e.durata || it.dur);
   if (e.perLato) {
     b.intervalli.splice(n, 1,
-      { tipo: 'lavoro', dur, es: e.nome + ' – destra', esId: e.id },
-      { tipo: 'lavoro', dur, es: e.nome + ' – sinistra', esId: e.id });
+      { tipo: 'lavoro', dur, es: e.nome + ' – destra', esId: e.id, modo: it.modo, rip: it.rip, secRip: it.secRip },
+      { tipo: 'lavoro', dur, es: e.nome + ' – sinistra', esId: e.id, modo: it.modo, rip: it.rip, secRip: it.secRip });
   } else Object.assign(it, { es: e.nome, esId: e.id, dur });
   recenti = [id, ...recenti.filter(x => x !== id)].slice(0, 8); scrivi(LS.recenti, recenti);
   tornaA('blocco', passi);

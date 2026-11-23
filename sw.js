@@ -1,4 +1,4 @@
-const CACHE = 'timer-intervalli-v3.1';
+const CACHE = 'timer-intervalli-v4.3';
 const FILE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './icon-180.png'];
 
 self.addEventListener('install', e => {
