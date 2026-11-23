@@ -197,6 +197,39 @@ input{font:inherit;color:inherit;-webkit-user-select:text;user-select:text}
 #ruota svg{width:56px;height:56px}
 body.orizz:not(.in-run) #ruota{display:flex}
 
+/* libreria esercizi */
+.chips{flex:0 0 auto;display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip-f{flex:0 0 auto;min-height:40px;padding:0 14px;border-radius:20px;background:var(--card);color:var(--muted);font-size:14px;font-weight:600;white-space:nowrap}
+.chip-f.sel{background:var(--acc);color:#06210f}
+.conta{flex:0 0 auto;font-size:12px;color:var(--muted);padding:0 4px}
+.elenco-es{flex:1;min-height:0;overflow-y:auto;list-style:none;display:flex;flex-direction:column;gap:6px;-webkit-overflow-scrolling:touch}
+.es-riga{display:flex;align-items:stretch;background:var(--card);border-radius:12px;min-height:58px;flex:0 0 auto}
+.es-p{flex:1;min-width:0;text-align:left;padding:8px 12px;display:flex;flex-direction:column;justify-content:center;gap:3px}
+.es-nome{font-size:16px;font-weight:600;line-height:1.25}
+.es-sub{font-size:12.5px;color:var(--muted)}
+.es-info{width:50px;flex:0 0 50px;color:var(--muted);border-left:1px solid var(--linea);display:grid;place-items:center}
+.es-info svg{width:22px;height:22px}
+.titoletto{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;padding:8px 4px 2px;list-style:none}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;background:var(--card2);color:var(--txt);margin-left:6px;vertical-align:2px}
+.sc-corpo{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding:6px 2px 10px;-webkit-overflow-scrolling:touch;-webkit-user-select:text;user-select:text}
+.sc-nome{font-size:24px;font-weight:800;line-height:1.2}
+.sc-en{font-size:13px;color:var(--muted);margin-top:-8px}
+.sc-tag{display:flex;flex-wrap:wrap;gap:6px}
+.sc-tag span{background:var(--card);border-radius:8px;padding:6px 10px;font-size:13px}
+.sc-titolo{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.sc-passi{list-style:none;counter-reset:p;display:flex;flex-direction:column;gap:12px}
+.sc-passi li{counter-increment:p;display:flex;gap:12px;font-size:16px;line-height:1.45}
+.sc-passi li::before{content:counter(p);flex:0 0 26px;height:26px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-size:13px;font-weight:700}
+.sc-vuoto{color:var(--muted);font-size:15px}
+.lib{width:40px;height:40px;border-radius:10px;background:var(--card2);color:var(--txt);display:grid;place-items:center;flex:0 0 40px}
+.lib svg{width:22px;height:22px}
+.form-es{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch}
+.form-es .chips{flex-wrap:wrap;overflow:visible}
+.etich{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;padding:4px 4px 0}
+.area{width:100%;min-height:120px;border-radius:12px;border:1px solid var(--linea);background:var(--card);padding:10px 12px;font:inherit;font-size:16px;color:var(--txt);outline:none;resize:none;-webkit-user-select:text;user-select:text}
+.area:focus{border-color:var(--acc)}
+
 /* impostazioni */
 .imp-corpo{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
 .gruppo{background:var(--card);border-radius:14px;overflow:hidden;flex:0 0 auto}
@@ -232,6 +265,7 @@ body.orizz:not(.in-run) #ruota{display:flex}
   <section id="v-home" class="view attiva">
     <header class="bar">
       <h1>Timer</h1>
+      <button class="icon" id="btn-lib" aria-label="Esercizi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h5"/></svg></button>
       <button class="icon" id="btn-imp" aria-label="Impostazioni">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.830 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
@@ -343,6 +377,59 @@ body.orizz:not(.in-run) #ruota{display:flex}
     </div>
   </section>
 
+  <!-- LIBRERIA ESERCIZI -->
+  <section id="v-lib" class="view">
+    <header class="bar">
+      <button class="testo" id="lib-indietro">‹ Indietro</button>
+      <h1 class="centro" id="lib-titolo">Esercizi</h1>
+      <button class="testo forte" id="lib-nuovo">+ Nuovo</button>
+    </header>
+    <div class="corpo-ed">
+      <input class="inp" id="lib-cerca" type="search" placeholder="Cerca (anche in inglese)" autocomplete="off" enterkeyhint="search">
+      <div class="chips" id="lib-gruppi"></div>
+      <div class="chips" id="lib-attrezzi"></div>
+      <div class="conta" id="lib-conta"></div>
+      <ul class="elenco-es" id="lib-lista"></ul>
+    </div>
+  </section>
+
+  <!-- SCHEDA ESERCIZIO -->
+  <section id="v-scheda" class="view">
+    <header class="bar">
+      <button class="testo" id="sc-indietro">‹ Indietro</button>
+      <h1 class="centro">Esercizio</h1>
+      <button class="testo forte" id="sc-modifica">Modifica</button>
+    </header>
+    <div class="corpo-ed">
+      <div class="sc-corpo" id="sc-corpo"></div>
+      <button class="primario" id="sc-usa">Usa questo esercizio</button>
+      <button class="pericolo" id="sc-elimina">Elimina esercizio</button>
+    </div>
+  </section>
+
+  <!-- ESERCIZIO PERSONALE -->
+  <section id="v-mioes" class="view">
+    <header class="bar">
+      <button class="testo" id="me-annulla">Annulla</button>
+      <h1 class="centro" id="me-titolo">Nuovo esercizio</h1>
+      <button class="testo forte" id="me-salva">Salva</button>
+    </header>
+    <div class="form-es">
+      <input class="inp" id="me-nome" maxlength="80" placeholder="Nome dell'esercizio" autocomplete="off" enterkeyhint="done">
+      <div class="etich">Gruppo muscolare</div>
+      <div class="chips" id="me-gruppi"></div>
+      <div class="etich">Attrezzo</div>
+      <div class="chips" id="me-attrezzi"></div>
+      <div class="gruppo"><button class="riga" id="me-lato" aria-pressed="false"><span>Per lato<small>Scegliendolo si creano due intervalli: destra e sinistra</small></span><i class="sw"></i></button></div>
+      <div class="campo" data-k="mdur">
+        <span class="et">Durata suggerita</span>
+        <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
+      </div>
+      <div class="etich">Come si fa (un passaggio per riga)</div>
+      <textarea class="area" id="me-istr" rows="5" placeholder="Es.: Piedi alla larghezza delle spalle."></textarea>
+    </div>
+  </section>
+
   <!-- IMPOSTAZIONI -->
   <section id="v-imp" class="view">
     <header class="bar">
@@ -379,11 +466,11 @@ body.orizz:not(.in-run) #ruota{display:flex}
 
 <script>
 'use strict';
-const VERSIONE = 'v2.3';
-const NOTE = '<b>v2.3</b> — Nuova icona: cronometro con guantone da boxe, bianco su fondo arancione.<br>' + '<b>v2.2</b> — Predisposizione per la libreria di esercizi: l’app legge il file esercizi.json, suggerisce gli esercizi mentre scrivi e li collega agli intervalli; la libreria entra in esportazione e importazione.<br>' + '<b>v2.1</b> — Intervalli riordinabili con le frecce ↑ ↓; pulsante “Fatto” del blocco più visibile, in alto a destra.<br>' + '<b>v2.0</b> — Allenamenti a blocchi: ogni blocco ha i suoi intervalli di lavoro e riposo, il numero di ripetizioni e un recupero finale facoltativo. Ogni intervallo di lavoro può avere il nome dell’esercizio, mostrato e annunciato durante l’allenamento. Nuovo modello “Circuito”. I timer creati con la v1 vengono convertiti in automatico.<br>'
+const VERSIONE = 'v3.1';
+const NOTE = '<b>v3.1</b> — Libreria completa: 799 esercizi tra corpo libero, stretching, manubri, kettlebell, elastici, palla medica e corda, con nomi e istruzioni in italiano; aggiunti esercizi di core, mobilità e yoga e cardio da circuito (plank, gatto-mucca, saluto al sole, skip, shadow boxing…).<br>' + '<b>v3.0</b> — Libreria di esercizi: nuova schermata Esercizi con ricerca e filtri per gruppo muscolare e attrezzo, scheda con le istruzioni, esercizi personali. Negli intervalli il pulsante libreria permette di scegliere l’esercizio; quelli “per lato” creano due intervalli, destra e sinistra. Primo blocco: kettlebell, palla medica, corda e cardio.<br>' + '<b>v2.3</b> — Nuova icona: cronometro con guantone da boxe, bianco su fondo arancione.<br>' + '<b>v2.2</b> — Predisposizione per la libreria di esercizi: l’app legge il file esercizi.json, suggerisce gli esercizi mentre scrivi e li collega agli intervalli; la libreria entra in esportazione e importazione.<br>' + '<b>v2.1</b> — Intervalli riordinabili con le frecce ↑ ↓; pulsante “Fatto” del blocco più visibile, in alto a destra.<br>' + '<b>v2.0</b> — Allenamenti a blocchi: ogni blocco ha i suoi intervalli di lavoro e riposo, il numero di ripetizioni e un recupero finale facoltativo. Ogni intervallo di lavoro può avere il nome dell’esercizio, mostrato e annunciato durante l’allenamento. Nuovo modello “Circuito”. I timer creati con la v1 vengono convertiti in automatico.<br>'
   + '<b>v1.1</b> — Schermata di allenamento anche in orizzontale; le altre schermate chiedono di ruotare il telefono.<br>'
   + '<b>v1.0</b> — Prima versione.';
-const LS = { timer: 'ti_timer', imp: 'ti_impostazioni', run: 'ti_in_corso', esercizi: 'ti_esercizi' };
+const LS = { timer: 'ti_timer', imp: 'ti_impostazioni', run: 'ti_in_corso', esercizi: 'ti_esercizi', recenti: 'ti_recenti' };
 const $ = id => document.getElementById(id);
 
 /* ---------- salvataggio ---------- */
@@ -435,7 +522,7 @@ function normalizza(t) {
         if (!i) return null;
         const d = intero(i.dur, 1, MAXT); if (d === null) return null;
         const lav = i.tipo !== 'riposo';
-        return { tipo: lav ? 'lavoro' : 'riposo', dur: d, es: lav ? String(i.es || '').slice(0, 40) : '', esId: lav ? String(i.esId || '').slice(0, 60) : '' };
+        return { tipo: lav ? 'lavoro' : 'riposo', dur: d, es: lav ? String(i.es || '').slice(0, 80) : '', esId: lav ? String(i.esId || '').slice(0, 60) : '' };
       }).filter(Boolean);
       if (!ints.length) return null;
       return { id: String(b.id || uid()), nome: String(b.nome || '').slice(0, 30), rip: intero(b.rip, 1, 99) ?? 1, rec: intero(b.rec, 0, MAXT) ?? 0, intervalli: ints };
@@ -519,7 +606,27 @@ function tornaHome() {
   if (vista !== 'home') { mostra('home', false); try { if (history.state && history.state.v) history.back(); } catch (e) {} }
   disegnaHome();
 }
+let dopoPop = null;
+function vaiVista(v) {
+  mostra(v, false);
+  if (v === 'blocco') disegnaBlocco(); else if (v === 'edit') disegnaEditor();
+  else if (v === 'lib') disegnaLib(); else if (v === 'scheda') disegnaScheda(); else if (v === 'home') disegnaHome();
+}
+/* torna indietro di "passi" schermate fino a v, usando la cronologia quando c'è */
+function tornaA(v, passi) {
+  try { if (history.state && history.state.v === vista) { dopoPop = v; history.go(-passi); return; } } catch (e) {}
+  dopoPop = null; vaiVista(v);
+}
+function destinazioneIndietro() {
+  if (vista === 'mioes') return mioesDa;
+  if (vista === 'scheda') return 'lib';
+  if (vista === 'lib') return libStato.modo === 'scegli' ? 'blocco' : 'home';
+  return null;
+}
 window.addEventListener('popstate', () => {
+  if (dopoPop) { const v = dopoPop; dopoPop = null; vaiVista(v); return; }
+  const dest = destinazioneIndietro();
+  if (dest) { vaiVista(dest); return; }
   const s = history.state && history.state.v;
   if (vista === 'run' && run && !run.finito) {
     try { history.pushState({ v: 'run' }, ''); } catch (e) {}
@@ -653,15 +760,17 @@ function disegnaBlocco() {
     <li class="icard ${it.tipo}" data-k="i:${n}">
       <div class="ir">
         <button class="chip" data-az="tipo">${it.tipo === 'lavoro' ? 'Lavoro' : 'Riposo'}</button>
-        ${it.tipo === 'lavoro'
-          ? `<input class="es" data-n="${n}" list="dl-esercizi" maxlength="40" placeholder="Esercizio (facoltativo)" value="${esc(it.es)}" autocomplete="off" enterkeyhint="done">`
-          : '<span class="sp"></span>'}
-        <button class="x" data-az="del" aria-label="Elimina intervallo">×</button>
-      </div>
-      <div class="ir">
         <button class="ord" data-az="su" aria-label="Sposta su"${n === 0 ? ' disabled' : ''}>↑</button>
         <button class="ord" data-az="giu" aria-label="Sposta giù"${n === b.intervalli.length - 1 ? ' disabled' : ''}>↓</button>
-        <span class="lbl"></span>
+        <span class="sp"></span>
+        <button class="x" data-az="del" aria-label="Elimina intervallo">×</button>
+      </div>
+      ${it.tipo === 'lavoro' ? `<div class="ir">
+        <input class="es" data-n="${n}" list="dl-esercizi" maxlength="80" placeholder="Esercizio (facoltativo)" value="${esc(it.es)}" autocomplete="off" enterkeyhint="done">
+        <button class="lib" data-az="lib" aria-label="Scegli dalla libreria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h5"/></svg></button>
+      </div>` : ''}
+      <div class="ir">
+        <span class="lbl">Durata</span>
         <button class="pm" data-d="-1" aria-label="Diminuisci">−</button><span class="val num"></span><button class="pm" data-d="1" aria-label="Aumenta">+</button>
       </div>
     </li>`).join('') + `
@@ -707,6 +816,8 @@ $('bl-int').addEventListener('click', e => {
     if (m < 0 || m >= I.length) return;
     [I[n], I[m]] = [I[m], I[n]];
     disegnaBlocco();
+  } else if (az === 'lib') {
+    apriLibreria('scegli', n);
   } else if (az === 'del') {
     if (b.intervalli.length === 1) return avviso('Un blocco deve avere almeno un intervallo.');
     b.intervalli.splice(n, 1); disegnaBlocco();
@@ -740,6 +851,7 @@ function nuovoTempo(v, d, min) {
 }
 function cambia(k, d) {
   if (vista === 'edit') { bozza[k] = nuovoTempo(bozza[k], d, 0); disegnaEditor(); return; }
+  if (vista === 'mioes') { mioBozza.durata = nuovoTempo(mioBozza.durata, d, 0); valoriMioEs(); return; }
   const b = bozza.blocchi[bIdx];
   if (k === 'rip') b.rip = Math.max(1, Math.min(99, b.rip + d));
   else if (k === 'rec') b.rec = nuovoTempo(b.rec, d, 0);
@@ -955,7 +1067,7 @@ function disegnaImp() {
       <span>${o.et}<small>${o.sub}</small></span><i class="sw"></i>
     </button>`).join('');
   $('ver-imp').textContent = VERSIONE;
-  $('note').innerHTML = NOTE;
+  $('note').innerHTML = NOTE + '<br><br><b>Esercizi</b> — Dati da exercises-dataset di Hasan Emir Yıldırım (licenza MIT); nomi e istruzioni in italiano riscritti, più esercizi integrativi scritti per l’app. Immagini non incluse.';
 }
 $('imp-opzioni').addEventListener('click', e => {
   const b = e.target.closest('.riga'); if (!b) return;
@@ -1013,10 +1125,14 @@ $('d-reset').onclick = () => conferma('Cancellare tutti i timer e le impostazion
    Gli intervalli tengono il nome (es) e, se corrisponde, l'id dell'esercizio (esId). */
 function normEsercizio(e) {
   if (!e || typeof e !== 'object' || !String(e.nome || '').trim()) return null;
+  let istr = Array.isArray(e.istruzioni) ? e.istruzioni : (e.nota ? String(e.nota).split('\n') : []);
+  istr = istr.map(x => String(x).trim().slice(0, 400)).filter(Boolean).slice(0, 15);
   return {
-    id: String(e.id || 'u-' + uid()).slice(0, 60), nome: String(e.nome).trim().slice(0, 40),
+    id: String(e.id || 'u-' + uid()).slice(0, 60), nome: String(e.nome).trim().slice(0, 80),
+    nomeEn: String(e.nomeEn || '').slice(0, 100),
     gruppo: String(e.gruppo || '').slice(0, 30), attrezzo: String(e.attrezzo || '').slice(0, 30),
-    nota: String(e.nota || '').slice(0, 300), durata: intero(e.durata, 0, MAXT) || 0,
+    muscoli: String(e.muscoli || '').slice(0, 80), stretching: !!e.stretching,
+    istruzioni: istr, durata: intero(e.durata, 0, MAXT) || 0,
     perLato: !!e.perLato, fonte: e.fonte === 'utente' ? 'utente' : 'libreria'
   };
 }
@@ -1039,8 +1155,174 @@ async function caricaLibreria() {
     libreria = base.concat(propri);
     scrivi(LS.esercizi, libreria);
     aggiornaSuggerimenti();
+    if (vista === 'lib') disegnaLib();
   } catch (e) {}
 }
+
+/* ---------- LIBRERIA: elenco, scheda, esercizi personali ---------- */
+const GRUPPI_ORD = ['Cardio', 'Gambe', 'Petto', 'Schiena', 'Spalle', 'Braccia', 'Avambracci', 'Addome', 'Polpacci', 'Collo'];
+const ATTREZZI_ORD = ['Corpo libero', 'Manubri', 'Kettlebell', 'Elastico', 'Palla medica', 'Corda', 'Ruota addominale', 'Altro'];
+const ICO_INFO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg>';
+let libStato = { modo: 'sfoglia', cerca: '', gruppo: '', attrezzo: '', target: null };
+let recenti = (() => { const v = leggi(LS.recenti, []); return Array.isArray(v) ? v.map(String) : []; })();
+function senzaAccenti(t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+function ordina(valori, ordine) {
+  return [...new Set(valori.filter(Boolean))].sort((a, b) => {
+    const ia = ordine.indexOf(a), ib = ordine.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b, 'it');
+  });
+}
+function apriLibreria(modo, n) {
+  libStato.modo = modo; libStato.target = modo === 'scegli' ? n : null;
+  libStato.cerca = '';
+  $('lib-titolo').textContent = modo === 'scegli' ? 'Scegli esercizio' : 'Esercizi';
+  $('lib-cerca').value = libStato.cerca;
+  disegnaLib(); mostra('lib');
+  $('lib-lista').scrollTop = 0;
+}
+function filtroGruppo(e) {
+  const g = libStato.gruppo;
+  if (!g) return true;
+  if (g === 'Stretching') return e.stretching;
+  if (g === 'I miei') return e.fonte === 'utente';
+  return e.gruppo === g;
+}
+function filtrati() {
+  const parole = senzaAccenti(libStato.cerca).split(/\s+/).filter(Boolean);
+  return libreria.filter(e => {
+    if (!filtroGruppo(e)) return false;
+    if (libStato.attrezzo && e.attrezzo !== libStato.attrezzo) return false;
+    if (!parole.length) return true;
+    const t = senzaAccenti([e.nome, e.nomeEn, e.gruppo, e.attrezzo, e.muscoli].join(' '));
+    return parole.every(p => t.includes(p));
+  }).sort((a, b) => a.nome.localeCompare(b.nome, 'it'));
+}
+function rigaEsercizio(e) {
+  const sub = [e.gruppo, e.attrezzo].filter(Boolean).join(' · ');
+  const badge = (e.perLato ? '<span class="badge">DX/SX</span>' : '') + (e.fonte === 'utente' ? '<span class="badge">MIO</span>' : '');
+  const info = libStato.modo === 'scegli' ? `<button class="es-info" data-az="info" aria-label="Scheda">${ICO_INFO}</button>` : '';
+  return `<li class="es-riga" data-id="${esc(e.id)}"><button class="es-p" data-az="apri">
+    <span class="es-nome">${esc(e.nome)}${badge}</span><span class="es-sub taglia">${esc(sub)}</span></button>${info}</li>`;
+}
+function disegnaChips() {
+  const gruppi = ordina(libreria.map(e => e.gruppo), GRUPPI_ORD);
+  if (libreria.some(e => e.stretching)) gruppi.push('Stretching');
+  if (libreria.some(e => e.fonte === 'utente')) gruppi.push('I miei');
+  const attrezzi = ordina(libreria.map(e => e.attrezzo), ATTREZZI_ORD);
+  const chip = (v, sel, tipo) => `<button class="chip-f${sel ? ' sel' : ''}" data-${tipo}="${esc(v)}">${esc(v || 'Tutti')}</button>`;
+  $('lib-gruppi').innerHTML = ['', ...gruppi].map(g => chip(g, g === libStato.gruppo, 'g')).join('');
+  $('lib-attrezzi').innerHTML = ['', ...attrezzi].map(a => chip(a, a === libStato.attrezzo, 'a')).join('')
+    .replace('>Tutti</button>', '>Tutti gli attrezzi</button>');
+}
+function disegnaListaLib() {
+  const ris = filtrati();
+  const libero = !libStato.cerca.trim() && !libStato.gruppo && !libStato.attrezzo;
+  let html = '';
+  if (!libreria.length) html = '<li class="vuoto">La libreria è vuota.<br>Tocca “+ Nuovo” per aggiungere un esercizio.</li>';
+  else if (!ris.length) html = '<li class="vuoto">Nessun esercizio trovato.</li>';
+  else {
+    const rec = libero ? recenti.map(id => libreria.find(e => e.id === id)).filter(Boolean) : [];
+    if (rec.length) html += '<li class="titoletto">Usati di recente</li>' + rec.map(rigaEsercizio).join('') + '<li class="titoletto">Tutti</li>';
+    html += ris.map(rigaEsercizio).join('');
+  }
+  $('lib-lista').innerHTML = html;
+  $('lib-conta').textContent = libero ? `${libreria.length} esercizi` : `${ris.length} su ${libreria.length}`;
+}
+function disegnaLib() { disegnaChips(); disegnaListaLib(); }
+$('btn-lib').onclick = () => apriLibreria('sfoglia');
+$('lib-cerca').addEventListener('input', e => { libStato.cerca = e.target.value; disegnaListaLib(); });
+$('lib-gruppi').addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (b) { libStato.gruppo = b.dataset.g; disegnaLib(); $('lib-lista').scrollTop = 0; } });
+$('lib-attrezzi').addEventListener('click', e => { const b = e.target.closest('[data-a]'); if (b) { libStato.attrezzo = b.dataset.a; disegnaLib(); $('lib-lista').scrollTop = 0; } });
+$('lib-lista').addEventListener('click', e => {
+  const b = e.target.closest('button[data-az]'); if (!b) return;
+  const id = b.closest('.es-riga').dataset.id;
+  if (b.dataset.az === 'apri' && libStato.modo === 'scegli') scegliEsercizio(id, 1);
+  else apriScheda(id);
+});
+$('lib-indietro').onclick = () => tornaA(destinazioneIndietro(), 1);
+$('lib-nuovo').onclick = () => apriMioEs(null);
+
+/* Inserisce l'esercizio nell'intervallo scelto; se è "per lato" crea due intervalli, destra e sinistra. */
+function scegliEsercizio(id, passi) {
+  const e = libreria.find(x => x.id === id);
+  const b = bozza && bozza.blocchi[bIdx], n = libStato.target, it = b && b.intervalli[n];
+  if (!e || !it) return tornaA('blocco', passi);
+  const dur = e.durata || it.dur;
+  if (e.perLato) {
+    b.intervalli.splice(n, 1,
+      { tipo: 'lavoro', dur, es: e.nome + ' – destra', esId: e.id },
+      { tipo: 'lavoro', dur, es: e.nome + ' – sinistra', esId: e.id });
+  } else Object.assign(it, { es: e.nome, esId: e.id, dur });
+  recenti = [id, ...recenti.filter(x => x !== id)].slice(0, 8); scrivi(LS.recenti, recenti);
+  tornaA('blocco', passi);
+}
+
+/* scheda */
+let schedaId = null;
+function apriScheda(id) { schedaId = id; disegnaScheda(); mostra('scheda'); $('sc-corpo').scrollTop = 0; }
+function disegnaScheda() {
+  const e = libreria.find(x => x.id === schedaId); if (!e) return;
+  const tag = [e.gruppo, e.attrezzo, e.stretching ? 'Stretching' : '', e.perLato ? 'Per lato: destra e sinistra' : '',
+    e.durata ? 'Durata suggerita ' + fmt(e.durata) : ''].filter(Boolean);
+  $('sc-corpo').innerHTML = `
+    <div class="sc-nome">${esc(e.nome)}</div>
+    ${e.nomeEn ? `<div class="sc-en">${esc(e.nomeEn)}</div>` : ''}
+    <div class="sc-tag">${tag.map(t => `<span>${esc(t)}</span>`).join('')}</div>
+    ${e.muscoli ? `<div><div class="sc-titolo">Muscolo principale</div><div style="font-size:16px;margin-top:4px">${esc(e.muscoli)}</div></div>` : ''}
+    <div class="sc-titolo">Come si fa</div>
+    ${e.istruzioni.length ? `<ol class="sc-passi">${e.istruzioni.map(p => `<li><span>${esc(p)}</span></li>`).join('')}</ol>` : '<div class="sc-vuoto">Nessuna istruzione.</div>'}`;
+  const mio = e.fonte === 'utente';
+  $('sc-usa').hidden = libStato.modo !== 'scegli';
+  $('sc-modifica').style.visibility = mio ? 'visible' : 'hidden';
+  $('sc-elimina').hidden = !mio;
+}
+$('sc-indietro').onclick = () => tornaA('lib', 1);
+$('sc-usa').onclick = () => scegliEsercizio(schedaId, 2);
+$('sc-modifica').onclick = () => { const e = libreria.find(x => x.id === schedaId); if (e) apriMioEs(e); };
+$('sc-elimina').onclick = () => {
+  const e = libreria.find(x => x.id === schedaId); if (!e) return;
+  conferma(`Eliminare “${e.nome}” dalla libreria? Gli allenamenti che lo usano mantengono il nome.`, () => {
+    libreria = libreria.filter(x => x.id !== e.id); scrivi(LS.esercizi, libreria);
+    recenti = recenti.filter(x => x !== e.id); scrivi(LS.recenti, recenti);
+    aggiornaSuggerimenti(); tornaA('lib', 1);
+  }, 'Elimina');
+};
+
+/* esercizio personale: crea o modifica */
+let mioBozza = null, mioesDa = 'lib';
+function apriMioEs(e) {
+  mioesDa = vista;
+  mioBozza = e ? clona(e) : { id: 'u-' + uid(), nome: '', nomeEn: '', gruppo: libStato.gruppo && GRUPPI_ORD.includes(libStato.gruppo) ? libStato.gruppo : '',
+    attrezzo: libStato.attrezzo || 'Corpo libero', muscoli: '', stretching: false, perLato: false, durata: 0, istruzioni: [], fonte: 'utente' };
+  $('me-titolo').textContent = e ? 'Modifica esercizio' : 'Nuovo esercizio';
+  $('me-nome').value = mioBozza.nome;
+  $('me-istr').value = mioBozza.istruzioni.join('\n');
+  valoriMioEs(); mostra('mioes');
+}
+function valoriMioEs() {
+  const chip = (v, sel, tipo) => `<button class="chip-f${sel ? ' sel' : ''}" data-${tipo}="${esc(v)}">${esc(v)}</button>`;
+  $('me-gruppi').innerHTML = GRUPPI_ORD.map(g => chip(g, g === mioBozza.gruppo, 'g')).join('');
+  $('me-attrezzi').innerHTML = ATTREZZI_ORD.map(a => chip(a, a === mioBozza.attrezzo, 'a')).join('');
+  $('me-lato').setAttribute('aria-pressed', mioBozza.perLato);
+  document.querySelector('#v-mioes .campo[data-k=mdur] .val').textContent = mioBozza.durata ? fmt(mioBozza.durata) : '—';
+}
+$('me-gruppi').addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (b) { mioBozza.gruppo = mioBozza.gruppo === b.dataset.g ? '' : b.dataset.g; valoriMioEs(); } });
+$('me-attrezzi').addEventListener('click', e => { const b = e.target.closest('[data-a]'); if (b) { mioBozza.attrezzo = b.dataset.a; valoriMioEs(); } });
+$('me-lato').onclick = () => { mioBozza.perLato = !mioBozza.perLato; valoriMioEs(); };
+$('me-annulla').onclick = () => tornaA(mioesDa, 1);
+$('me-salva').onclick = () => {
+  const nome = $('me-nome').value.trim();
+  if (!nome) return avviso('Scrivi il nome dell’esercizio.');
+  if (libreria.some(x => x.id !== mioBozza.id && x.nome.toLowerCase() === nome.toLowerCase())) return avviso('Esiste già un esercizio con questo nome.');
+  mioBozza.nome = nome;
+  mioBozza.istruzioni = $('me-istr').value.split('\n').map(x => x.trim()).filter(Boolean);
+  const nuovo = normEsercizio(Object.assign({}, mioBozza, { fonte: 'utente' }));
+  const i = libreria.findIndex(x => x.id === nuovo.id);
+  if (i >= 0) libreria[i] = nuovo; else libreria.push(nuovo);
+  scrivi(LS.esercizi, libreria); aggiornaSuggerimenti();
+  schedaId = nuovo.id;
+  tornaA(mioesDa, 1);
+};
 
 /* ---------- orientamento ---------- */
 /* Usa l'orientamento dello schermo (non della finestra), così la tastiera aperta non fa scattare l'avviso.

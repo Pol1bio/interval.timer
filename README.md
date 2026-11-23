@@ -12,34 +12,39 @@ Web app installabile (PWA), pubblicata con GitHub Pages. Tutti i dati restano su
 | `sw.js` | Service worker: funzionamento offline e aggiornamenti |
 | `icon-180.png`, `icon-192.png`, `icon-512.png` | Icone (180 px per iPhone) |
 | `icona.svg` | Disegno originale dell'icona, da cui si ricavano i PNG |
-| `esercizi.json` | Libreria di esercizi (per ora vuota) |
+| `esercizi.json` | Libreria di esercizi (799 esercizi) |
 
 ## Libreria di esercizi
 
-L'app legge `esercizi.json` a ogni avvio: gli esercizi compaiono come suggerimenti quando si scrive il nome
-di un esercizio in un intervallo. Per aggiornare la libreria basta sostituire questo file; gli esercizi
-creati sul telefono non vengono toccati.
+`esercizi.json` contiene la libreria: 799 esercizi con nome e istruzioni in italiano (corpo libero, stretching,
+mobilità e yoga, manubri, kettlebell, elastici, palla medica, corda). L'app lo rilegge a ogni avvio: per
+aggiornare la libreria basta sostituire questo file, senza toccare `index.html`. Gli esercizi creati sul
+telefono non vengono toccati.
 
-Formato:
+Formato di un esercizio:
 
 ```json
 {
-  "versione": 1,
-  "esercizi": [
-    {
-      "id": "squat",
-      "nome": "Squat",
-      "gruppo": "Gambe",
-      "attrezzo": "Corpo libero",
-      "nota": "Talloni a terra, schiena dritta",
-      "durata": 40,
-      "perLato": false
-    }
-  ]
+  "id": "ti-plank",
+  "nome": "Plank",
+  "nomeEn": "plank",
+  "gruppo": "Addome",
+  "attrezzo": "Corpo libero",
+  "muscoli": "addominali",
+  "stretching": false,
+  "perLato": false,
+  "durata": 30,
+  "istruzioni": ["Avambracci a terra…", "Allinea testa, schiena e talloni…", "Mantieni…"]
 }
 ```
 
-Solo `id` e `nome` sono obbligatori. `durata` è in secondi.
+Solo `id` e `nome` sono obbligatori. `durata` è in secondi (0 = nessuna durata suggerita); con
+`perLato: true` l'esercizio, scelto in un intervallo, diventa due intervalli (destra e sinistra).
+
+Fonte: gli esercizi con id `ed-*` derivano da
+[exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset) di Hasan Emir Yıldırım (licenza MIT,
+il testo della licenza è nel campo `licenza` del file); nomi e istruzioni sono stati riscritti in italiano.
+Immagini e video del dataset non sono inclusi. Gli esercizi con id `ti-*` sono scritti apposta per questa app.
 
 ## Aggiornare l'app
 
